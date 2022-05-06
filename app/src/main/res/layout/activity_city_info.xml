@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.drc_practical_06_05.ui.cities.CityInfoViewModel" />
+            type="com.example.drc_practical_06_05.ui.cities.cityfragment.CityInfoViewModel" />
 
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

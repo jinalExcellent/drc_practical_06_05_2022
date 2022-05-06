@@ -1,4 +1,4 @@
-package com.example.drc_practical_06_05.ui.cities
+package com.example.drc_practical_06_05.ui.cities.cityfragment
 
 import android.content.Context
 import com.example.drc_practical_06_05.base.BaseViewModel

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, V : ViewModel> : Fragment() {
@@ -18,6 +19,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : ViewModel> : Fragment() {
 
     @Inject
     lateinit var viewModel: V
+
+    @Inject
+    lateinit var gson: Gson
 
     lateinit var binding: T
 
