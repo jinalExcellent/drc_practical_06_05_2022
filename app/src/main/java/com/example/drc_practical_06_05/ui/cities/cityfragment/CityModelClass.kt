@@ -3,7 +3,7 @@ package com.example.drc_practical_06_05.ui.cities
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-    class CityList : ArrayList<CityList.CityListItem>(){
+class CityList : ArrayList<CityList.CityListItem>() {
     data class CityListItem(
         @SerializedName("coord")
         val coord: Coord,

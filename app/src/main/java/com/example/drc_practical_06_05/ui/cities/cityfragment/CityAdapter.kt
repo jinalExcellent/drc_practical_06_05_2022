@@ -11,7 +11,7 @@ import com.example.drc_practical_06_05.ui.cities.CityList
 
 class CityAdapter(
     var context: Context,
-    var listCity: CityList
+    var listCity: ArrayList<CityList.CityListItem>
     ) :
         RecyclerView.Adapter<CityAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

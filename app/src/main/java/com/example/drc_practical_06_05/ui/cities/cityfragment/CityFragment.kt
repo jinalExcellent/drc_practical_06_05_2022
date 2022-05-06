@@ -3,6 +3,7 @@ package com.example.drc_practical_06_05.ui.cities.cityfragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import com.example.drc_practical_06_05.BR
 import com.example.drc_practical_06_05.R
 import com.example.drc_practical_06_05.base.BaseFragment
@@ -16,24 +17,64 @@ import java.io.InputStream
 
 @AndroidEntryPoint
 class CityFragment : BaseFragment<FragmentCityBinding, CityInfoViewModel>() {
+    var cityList: CityList? = null
+    var cityListData = ArrayList<CityList.CityListItem>()
+    var searchData = ArrayList<CityList.CityListItem>()
+    lateinit var cityAdapter: CityAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCityJsonData()
+
+        binding.searchData.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                search(query)
+                Log.d("TAG",query.toString())
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText.isNullOrEmpty())
+                {
+                    getCityJsonData()
+                }else
+                {
+                    search(newText)
+                    Log.d("TAG","newText "+newText.toString())
+                }
+
+                return true
+            }
+        })
+    }
+
+    private fun search(searchText: String?) {
+        searchText?.let {
+            cityListData?.forEach { city ->
+                if (city.name.contains(searchText, true) ||
+                    city.country.contains(searchText, true)
+                ) {
+                    searchData.add(city)
+                    cityAdapter = CityAdapter(activity, searchData!!)
+                    binding.rvCity.adapter = cityAdapter
+                }
+            }
+        }
     }
 
     private fun getCityJsonData() {
         try {
-            val myJson: String = inputStreamToString(activity.resources.openRawResource(R.raw.cities))!!
-            Log.d("==>CITY DATA : ","myJson gson: $myJson")
-            val myModel: CityList = Gson().fromJson(myJson, CityList::class.java)
-            Log.d("==>CITY DATA : ","myModel size: ${myModel.size}")
-            var adapter = CityAdapter(activity, myModel)
-            binding.rvCity.adapter = adapter
-
+            val myJson: String =
+                inputStreamToString(activity.resources.openRawResource(R.raw.cities))!!
+            cityList = Gson().fromJson(myJson, CityList::class.java)
+            cityListData.addAll(cityList!!)
+            cityAdapter = CityAdapter(activity, cityListData!!)
+            binding.rvCity.adapter = cityAdapter
         } catch (ioException: IOException) {
             ioException.printStackTrace()
 
         }
+
     }
 
     private fun inputStreamToString(inputStream: InputStream): String? {
