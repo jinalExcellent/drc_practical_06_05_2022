@@ -1,6 +1,7 @@
 package com.example.drc_practical_06_05.base
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : ViewModel> : AppCompatActiv
     abstract val layoutId: Int
     abstract val bindingVariable: Int
     lateinit var activity: Activity
+
     lateinit var binding: T
     @Inject
     lateinit var viewModel: V
+    @Inject
+    lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
